@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'page/loading.dart';
+import 'page/home.dart';
 
 void main() {
   runApp(const MainApp());
@@ -10,8 +11,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoadingPage(),
+    return MaterialApp(
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
