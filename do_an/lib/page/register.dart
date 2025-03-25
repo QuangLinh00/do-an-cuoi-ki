@@ -42,7 +42,7 @@ class ConfirmationDialog extends StatelessWidget {
                 // Add your call functionality here
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.red,
+                //primary: Colors.red,
               ),
               child: Text('Gọi'),
             ),

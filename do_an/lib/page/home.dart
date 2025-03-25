@@ -1,47 +1,33 @@
 import 'package:flutter/material.dart';
-
-
-
+import 'signin.dart';
+import 'route_dichvu/dichvu.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      body: Column(
-        children: [
-          Wrap(
-            children: [
-              Container(
-                height: 250, // Chiều cao của background màu đỏ
-                color: Colors.red,
-              ),
-              Positioned(
-                top: 200, // Vị trí top của Welcome Card (250 - 50)
-                left: 0,
-                right: 0,
-                child: WelcomeCardComponent(),
-              ),
-            ],
-          ),
-           SizedBox(height: 50),
-          // WelcomeCardComponent(),
-          SizedBox(height: 10),
-          RegisterCardComponent(),
-          SizedBox(height: 20),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SectionTitle(title: 'Dịch vụ'),
-                  ServiceIconsComponent(),
-                  ContactOptionsComponent(),
-                ],
-              ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              height: 180, // Chiều cao của phần nền đỏ
+              color: Colors.red,
             ),
-          ),
-          TabBarComponent(),
-        ],
+            Column(
+              children: [
+                SizedBox(height: 100), // Đẩy WelcomeCard xuống vị trí phù hợp
+                WelcomeCardComponent(),
+                SizedBox(height: 10),
+                RegisterCardComponent(),
+                SizedBox(height: 20),
+                SectionTitle(title: 'Dịch vụ'),
+                ServiceIconsComponent(),
+              ],
+            ),
+          ],
+        ),
       ),
+      bottomNavigationBar: TabBarComponent(),
     );
   }
 }
@@ -54,32 +40,28 @@ class WelcomeCardComponent extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 255, 255, 255), 
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black, width: 1.5),
+         border: Border.all(
+            color: Colors.grey, // Border color
+            width: 1, // Border width
+          ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                padding: EdgeInsets.all(5),
-                child: Image.asset('assets/logo/logo.png', width: 30, height: 30),
-              ),
+              Image.asset('assets/logo/logo.png', width: 40, height: 40),
               SizedBox(width: 10),
-              Text('Medi xin chào', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Colors.black)),
+              Text('Medi xin chào', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
             ],
           ),
           Divider(),
-          Text('Bạn chưa đăng nhập', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-          Text('Hãy đăng kí tài khoản để bắt đầu trải nghiệm', style: TextStyle(fontSize: 14, color: Colors.black)),
+          Text('Bạn chưa đăng nhập', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red)),
+          Text('Hãy đăng kí tài khoản để bắt đầu trải nghiệm', style: TextStyle(fontSize: 14)),
           Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.topRight,
             child: Icon(Icons.arrow_forward, color: Colors.black),
           ),
         ],
@@ -102,7 +84,7 @@ class RegisterCardComponent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset('assets/logo/logo2.png', width: 50, height: 50),
+          
           Text('Đăng ký khám bệnh', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
           Icon(Icons.arrow_forward, color: Colors.white),
         ],
@@ -110,7 +92,6 @@ class RegisterCardComponent extends StatelessWidget {
     );
   }
 }
-
 class ServiceIconsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -119,12 +100,14 @@ class ServiceIconsComponent extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 3,
       children: [
-        ServiceItem(image: '../info.png', label: 'thông tin khám bệnh'),
-        ServiceItem(image: '../payment.png', label: 'thanh toán viện phí'),
-        ServiceItem(image: '../card.png', label: 'quản lý thẻ'),
-        ServiceItem(image: '../record.png', label: 'quản lý hồ sơ'),
-        ServiceItem(image: '../schedule.png', label: 'lịch tái khám'),
-        ServiceItem(image: '../invoice.png', label: 'hóa đơn điện tử'),
+        ServiceItem(image: 'assets/icon1.png', label: 'thông tin khám bệnh', page: ThongTinKhamBenhScreen()),
+        ServiceItem(image: 'assets/icon2.png', label: 'thanh toán viện phí', page: ThanhToanVienPhiScreen()),
+        ServiceItem(image: 'assets/icon3.png', label: 'quản lý thẻ', page: QuanLyTheScreen()),
+        ServiceItem(image: 'assets/icon4.png', label: 'quản lý hồ sơ', page: QuanLyHoSoScreen()),
+        ServiceItem(image: 'assets/icon7.png', label: 'lịch tái khám', page: LichTaiKhamScreen()),
+        ServiceItem(image: 'assets/icon8.png', label: 'hóa đơn điện tử', page: HoaDonDienTuScreen()),
+        ServiceItem(image: 'assets/icon5.png', label: 'hotline', page: HotlineScreen()),
+        ServiceItem(image: 'assets/icon6.png', label: 'tư vấn 24/7', page: TuVanScreen()),
       ],
     );
   }
@@ -133,57 +116,88 @@ class ServiceIconsComponent extends StatelessWidget {
 class ServiceItem extends StatelessWidget {
   final String image;
   final String label;
+  final Widget page;
 
-  ServiceItem({required this.image, required this.label});
+  ServiceItem({required this.image, required this.label, required this.page});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(image, width: 50, height: 50),
-        SizedBox(height: 5),
-        Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: 14)),
-      ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),
+        );
+      },
+      child: Column(
+        children: [
+          Image.asset(image, width: 50, height: 50),
+          SizedBox(height: 5),
+          Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: 14)),
+        ],
+      ),
     );
   }
 }
 
-class ContactOptionsComponent extends StatelessWidget {
+
+
+
+
+class TabBarComponent extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ContactItem(image: '../hotline.png', label: 'hotline'),
-        ContactItem(image: '../support.png', label: 'tư vấn 24/7'),
-      ],
-    );
-  }
+  _TabBarComponentState createState() => _TabBarComponentState();
 }
 
-class ContactItem extends StatelessWidget {
-  final String image;
-  final String label;
+class _TabBarComponentState extends State<TabBarComponent> {
+  int _selectedIndex = 0;
 
-  ContactItem({required this.image, required this.label});
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(image, width: 50, height: 50),
-        SizedBox(height: 5),
-        Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: 14)),
-      ],
-    );
+    // Điều hướng đến các trang khác nhau khi nhấn vào
+    switch (index) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Homepage()),
+        );
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LichKhamPage()),
+        );
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ThongBaoPage()),
+        );
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LichSuGDPage()),
+        );
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TaiKhoanPage()),
+        );
+        break;
+    }
   }
-}
 
-class TabBarComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Trang chủ'),
         BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: 'Lịch khám'),
@@ -194,6 +208,43 @@ class TabBarComponent extends StatelessWidget {
     );
   }
 }
+
+// Các trang cần có:
+class Homepage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Center(child: Text("Trang chủ")));
+  }
+}
+
+class LichKhamPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Center(child: Text("Lịch khám")));
+  }
+}
+
+class ThongBaoPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Center(child: Text("Thông báo")));
+  }
+}
+
+class LichSuGDPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Center(child: Text("Lịch sử giao dịch")));
+  }
+}
+
+class TaiKhoanPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AuthPage();
+  }
+}
+
 
 class SectionTitle extends StatelessWidget {
   final String title;
