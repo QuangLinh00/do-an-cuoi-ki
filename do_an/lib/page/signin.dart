@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'account/dangki.dart';
 import 'account/dangnhap.dart';
 
-
 class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Đăng nhập và Đăng ký'),
+        automaticallyImplyLeading: false,
+        
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset('assets/logo/logo.png', width: 100, height: 100),
             Text('Đăng nhập hoặc Đăng ký'),
             SizedBox(height: 20),
             ElevatedButton(
@@ -54,6 +56,7 @@ class AuthPage extends StatelessWidget {
                 ),
               ],
             ),
+            
           ],
         ),
       ),

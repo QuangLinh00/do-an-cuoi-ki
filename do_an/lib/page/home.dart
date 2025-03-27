@@ -1,33 +1,63 @@
 import 'package:flutter/material.dart';
-import 'signin.dart';
-import 'route_dichvu/dichvu.dart';
-class HomePage extends StatelessWidget {
+
+import 'route/dichvu.dart';
+import 'route/trangchu.dart';
+
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int _currentPage = 0; // Chỉ mục của trang hiện tại
+
+  final List<Widget> _pages = [
+    Homepage(),
+    LichKhamPage(),
+    ThongBaoPage(),
+    LichSuGDPage(),
+    TaiKhoanPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              height: 180, // Chiều cao của phần nền đỏ
-              color: Colors.red,
-            ),
-            Column(
-              children: [
-                SizedBox(height: 100), // Đẩy WelcomeCard xuống vị trí phù hợp
-                WelcomeCardComponent(),
-                SizedBox(height: 10),
-                RegisterCardComponent(),
-                SizedBox(height: 20),
-                SectionTitle(title: 'Dịch vụ'),
-                ServiceIconsComponent(),
-              ],
-            ),
-          ],
-        ),
+      body: _pages[_currentPage], // Hiển thị trang hiện tại
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentPage,
+        onTap: (index) {
+          setState(() {
+            _currentPage = index; // Cập nhật chỉ mục trang
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Trang chủ',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: 'Lịch khám',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Thông báo',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'Lịch sử GD',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Tài khoản',
+          ),
+        ],
       ),
-      bottomNavigationBar: TabBarComponent(),
     );
   }
 }
@@ -208,43 +238,6 @@ class _TabBarComponentState extends State<TabBarComponent> {
     );
   }
 }
-
-// Các trang cần có:
-class Homepage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Trang chủ")));
-  }
-}
-
-class LichKhamPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Lịch khám")));
-  }
-}
-
-class ThongBaoPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Thông báo")));
-  }
-}
-
-class LichSuGDPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Lịch sử giao dịch")));
-  }
-}
-
-class TaiKhoanPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return AuthPage();
-  }
-}
-
 
 class SectionTitle extends StatelessWidget {
   final String title;
