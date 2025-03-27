@@ -15,7 +15,7 @@ class Homepage extends StatelessWidget {
             ),
             Column(
               children: [
-                SizedBox(height: 100), // Đẩy WelcomeCard xuống vị trí phù hợp
+                SizedBox(height: 100,), 
                 WelcomeCardComponent(),
                 SizedBox(height: 10),
                 RegisterCardComponent(),
@@ -24,6 +24,7 @@ class Homepage extends StatelessWidget {
                 ServiceIconsComponent(),
               ],
             ),
+            
           ],
         ),
       ),

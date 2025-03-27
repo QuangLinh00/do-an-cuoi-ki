@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'register.dart';
 import 'route/dichvu.dart';
 import 'route/trangchu.dart';
 
@@ -103,21 +103,32 @@ class WelcomeCardComponent extends StatelessWidget {
 class RegisterCardComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      padding: EdgeInsets.all(10),
-      height: 100,
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          
-          Text('Đăng ký khám bệnh', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-          Icon(Icons.arrow_forward, color: Colors.white),
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RegisterPage()),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.all(10),
+        height: 100,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Đăng ký khám bệnh',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold)),
+            Icon(Icons.arrow_forward, color: Colors.white),
+          ],
+        ),
       ),
     );
   }
@@ -125,20 +136,23 @@ class RegisterCardComponent extends StatelessWidget {
 class ServiceIconsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      crossAxisCount: 3,
-      children: [
-        ServiceItem(image: 'assets/icon1.png', label: 'thông tin khám bệnh', page: ThongTinKhamBenhScreen()),
-        ServiceItem(image: 'assets/icon2.png', label: 'thanh toán viện phí', page: ThanhToanVienPhiScreen()),
-        ServiceItem(image: 'assets/icon3.png', label: 'quản lý thẻ', page: QuanLyTheScreen()),
-        ServiceItem(image: 'assets/icon4.png', label: 'quản lý hồ sơ', page: QuanLyHoSoScreen()),
-        ServiceItem(image: 'assets/icon7.png', label: 'lịch tái khám', page: LichTaiKhamScreen()),
-        ServiceItem(image: 'assets/icon8.png', label: 'hóa đơn điện tử', page: HoaDonDienTuScreen()),
-        ServiceItem(image: 'assets/icon5.png', label: 'hotline', page: HotlineScreen()),
-        ServiceItem(image: 'assets/icon6.png', label: 'tư vấn 24/7', page: TuVanScreen()),
-      ],
+    return Container(
+      color: Colors.white, 
+      child: GridView.count(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        crossAxisCount: 3,
+        children: [
+          ServiceItem(image: 'assets/icon1.png', label: 'thông tin khám bệnh', page: ThongTinKhamBenhScreen()),
+          ServiceItem(image: 'assets/icon2.png', label: 'thanh toán viện phí', page: ThanhToanVienPhiScreen()),
+          ServiceItem(image: 'assets/icon3.png', label: 'quản lý thẻ', page: QuanLyTheScreen()),
+          ServiceItem(image: 'assets/icon4.png', label: 'quản lý hồ sơ', page: QuanLyHoSoScreen()),
+          ServiceItem(image: 'assets/icon7.png', label: 'lịch tái khám', page: LichTaiKhamScreen()),
+          ServiceItem(image: 'assets/icon8.png', label: 'hóa đơn điện tử', page: HoaDonDienTuScreen()),
+          ServiceItem(image: 'assets/icon5.png', label: 'hotline', page: HotlineScreen()),
+          ServiceItem(image: 'assets/icon6.png', label: 'tư vấn 24/7', page: TuVanScreen()),
+        ],
+      ),
     );
   }
 }
@@ -160,6 +174,7 @@ class ServiceItem extends StatelessWidget {
         );
       },
       child: Column(
+        
         children: [
           Image.asset(image, width: 50, height: 50),
           SizedBox(height: 5),
